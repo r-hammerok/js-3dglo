@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    countTimer('23 februaly 2021 14:38:30');
+    countTimer('01 marth 2021 14:38:30');
 
     // Menu
     const toggleMenu = () => {
@@ -75,5 +75,40 @@ window.addEventListener('DOMContentLoaded', function() {
         popupBtns.forEach((item) => item.addEventListener('click', () => popup.style.display = 'block'));
         popupClose.addEventListener('click', () => popup.style.display = 'none');
     };
-    togglePopup();
+    // togglePopup();
+
+    // Animation Popup
+    const animationPopup = () => {
+        const popup = document.querySelector('.popup'),
+            popupContent = document.querySelector('.popup-content'),
+            popupBtns = document.querySelectorAll('.popup-btn'),
+            popupClose = document.querySelector('.popup-close');
+        
+        let curTop = -382, idAnimation;
+        
+        const drawPopup = () => {
+            popupContent.style.top = `${curTop}px`;
+        };
+
+        const actionPopup = () => {
+            curTop += 0.1;
+            if (curTop >= 50) {
+                cancelAnimationFrame(idAnimation);
+                return;
+            }
+            idAnimation = requestAnimationFrame(drawPopup);
+            actionPopup();
+        }
+
+        popupBtns.forEach((item) => {
+            item.addEventListener('click', () => {
+                popup.style.display = 'block';
+                actionPopup();
+            });
+        });
+        popupClose.addEventListener('click', () => popup.style.display = 'none');
+    };
+
+    animationPopup();
+   
 });
