@@ -17,9 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function getWeekDay(date = new Date()) {
-        const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-        return days[date.getDay()];
+    function firstLetterUp(str = '') {
+        return str[0].toLocaleUpperCase() + str.slice(1);
     }
 
     function declOfNum (n, textForms) {
@@ -44,23 +43,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDate(date = new Date()) {
-        const curTime = date.toLocaleTimeString('ru',
+        const 
+        curTime = date.toLocaleTimeString('ru',
         {
             hour: '2-digit', 
             minute: 'numeric',
             second: 'numeric',
             hour12: true
-        });
+        }),
+        curWeekDay = firstLetterUp(date.toLocaleDateString('ru',
+        {
+            weekday: 'long'
+        }));
         const nowDate = 
             `${getHello(date)}<br />
-            Сегодня: ${getWeekDay(date)}<br />
+            Сегодня: ${curWeekDay}<br />
             Текущее время: ${curTime}<br />
             До нового года осталось: ${getRemainderNewYear(date)}`;
         
        return nowDate;
     }
 
-    reminderNY.innerHTML = `<em>${updateDate()}</em>`;
+    document.body.innerHTML = `<p><em>${updateDate()}</em></p>`;
 });
 
 
