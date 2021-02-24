@@ -75,7 +75,6 @@ window.addEventListener('DOMContentLoaded', function() {
         popupBtns.forEach((item) => item.addEventListener('click', () => popup.style.display = 'block'));
         popupClose.addEventListener('click', () => popup.style.display = 'none');
     };
-    // togglePopup();
 
     // Animation Popup
     const animationPopup = () => {
@@ -84,31 +83,37 @@ window.addEventListener('DOMContentLoaded', function() {
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
         
-        let curTop = -382, idAnimation;
+        let popupTop = -60, idAnimation;
         
-        const drawPopup = () => {
-            popupContent.style.top = `${curTop}px`;
+        const showPopup = () => {
+            if (popup.style.display !== 'block') {
+                popup.style.display = 'block';
+            }
+            popupContent.style.top = `${popupTop}%`;
+            popupTop += 2;
+            if (popupTop <= 10) {
+                setTimeout(showPopup, 8);
+            }
         };
 
-        const actionPopup = () => {
-            curTop += 0.1;
-            if (curTop >= 50) {
-                cancelAnimationFrame(idAnimation);
-                return;
+        const hidePopup = () => {
+            popupContent.style.top = `${popupTop}%`;
+            popupTop -= 2;
+            if (popupTop >= -60) {
+                setTimeout(hidePopup, 8);
+            } else {
+                popup.style.display = 'none';
             }
-            idAnimation = requestAnimationFrame(drawPopup);
-            actionPopup();
-        }
+        };
 
-        popupBtns.forEach((item) => {
-            item.addEventListener('click', () => {
-                popup.style.display = 'block';
-                actionPopup();
-            });
-        });
-        popupClose.addEventListener('click', () => popup.style.display = 'none');
-    };
+        popupBtns.forEach((item) => item.addEventListener('click', () => showPopup()));
+        popupClose.addEventListener('click', () => hidePopup());
+     };
 
-    animationPopup();
-   
+     if (window.innerWidth >= 768) {
+        animationPopup();
+     } else {
+        togglePopup();
+     }
+     
 });
