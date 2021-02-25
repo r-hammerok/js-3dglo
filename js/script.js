@@ -78,13 +78,8 @@ window.addEventListener('DOMContentLoaded', function() {
         popup.addEventListener('click', (event) => {
             let target = event.target;
 
-            if (target.classList.contains('popup-close')) {
+            if (target.classList.contains('popup-close') || !target.closest('.popup-content')) {
                 popup.style.display = 'none';
-            } else {
-                target = target.closest('.popup-content');
-                if (!target) {
-                    popup.style.display = 'none';
-                }
             }
         });
     };
