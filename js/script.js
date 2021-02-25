@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function() {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul > li');
+            menuItems = menu.querySelectorAll('ul > li > a');
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
         };
@@ -67,53 +67,64 @@ window.addEventListener('DOMContentLoaded', function() {
     toggleMenu();
 
     //PopUp
-    const togglePopup = () => {
+    const handlerPopup = () => {
         const popup = document.querySelector('.popup'),
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
         
-        popupBtns.forEach((item) => item.addEventListener('click', () => popup.style.display = 'block'));
-        popupClose.addEventListener('click', () => popup.style.display = 'none');
-    };
+        const animatePopup = (action = 'show') => {
 
-    // Animation Popup
-    const animationPopup = () => {
-        const popup = document.querySelector('.popup'),
-            popupContent = document.querySelector('.popup-content'),
-            popupBtns = document.querySelectorAll('.popup-btn'),
-            popupClose = document.querySelector('.popup-close');
-        
-        let popupTop = -60, idAnimation;
-        
-        const showPopup = () => {
-            if (popup.style.display !== 'block') {
-                popup.style.display = 'block';
-            }
-            popupContent.style.top = `${popupTop}%`;
-            popupTop += 2;
-            if (popupTop <= 10) {
-                setTimeout(showPopup, 8);
-            }
-        };
+            const popupContent = document.querySelector('.popup-content');
+            const startTop = -60,
+                endTop = 10;
+            
+            let currentTop, idRequest;
+            const showPopup = () => {
+                popupContent.style.top = `${currentTop}%`;
+                currentTop += 3;
+                if (currentTop <= endTop) {
+                    idRequest = requestAnimationFrame(showPopup);
+                } else {
+                    popupContent.removeAttribute('style');
+                    cancelAnimationFrame(idRequest);
+                }
+            };
+            const hidePopup = () => {
+                popupContent.style.top = `${currentTop}%`;
+                currentTop -= 2;
+                if (currentTop >= startTop) {
+                    idRequest = requestAnimationFrame(hidePopup);
+                } else {
+                    cancelAnimationFrame(idRequest);
+                    popupContent.removeAttribute('style');
+                    popup.removeAttribute('style');
+                }
+            };
 
-        const hidePopup = () => {
-            popupContent.style.top = `${popupTop}%`;
-            popupTop -= 2;
-            if (popupTop >= -60) {
-                setTimeout(hidePopup, 8);
+            if (action === 'show') {
+                currentTop = startTop;
+                showPopup();
             } else {
-                popup.style.display = 'none';
+                currentTop = endTop;
+                hidePopup();
             }
+
         };
 
-        popupBtns.forEach((item) => item.addEventListener('click', () => showPopup()));
-        popupClose.addEventListener('click', () => hidePopup());
-     };
-
-     if (window.innerWidth >= 768) {
-        animationPopup();
-     } else {
-        togglePopup();
-     }
-     
+        popupClose.addEventListener('click', () => {
+            if (window.innerWidth >= 768) {
+                animatePopup('close');
+            } else {
+                popup.removeAttribute('style');
+            }
+        });
+        popupBtns.forEach((item) => item.addEventListener('click', () => {
+            popup.style.display = 'block';
+            if (window.innerWidth >= 768) {
+                animatePopup('show');
+            }
+        }));
+    };
+    handlerPopup();
+    
 });
