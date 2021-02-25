@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     // animationPopup();
 
-    //tabs
+    //Tabs
     const tabs = () => {
         const tabHeader = document.querySelector('.service-header'),
             tab = tabHeader.querySelectorAll('.service-header-tab'),
@@ -154,7 +154,26 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     tabs();
 
-    //slider
+    //Modify Dots
+    const modifyDot = () => {
+        const dotsWrapper = document.querySelector('.portfolio-dots'),
+            countSlides = document.querySelectorAll('.portfolio-item').length;
+        
+        dotsWrapper.textContent = '';
+        
+        console.log(countSlides);
+        for (let i = 1; i <= countSlides; i++) {
+            let newEl = document.createElement('li');
+            newEl.classList.add('dot');
+            if (i === 1) {
+                newEl.classList.add('dot-active');
+            }
+            dotsWrapper.insertAdjacentElement('beforeend', newEl);
+        }
+    };
+    modifyDot();
+
+    //Slider
     const slider = () => {
         const slide = document.querySelectorAll('.portfolio-item'),
             btn = document.querySelectorAll('.portfolio-btn'),
@@ -241,4 +260,5 @@ window.addEventListener('DOMContentLoaded', function() {
         startSlide(3000);
     };
     slider();
+
 });
