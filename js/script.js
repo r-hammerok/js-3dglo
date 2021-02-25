@@ -52,16 +52,19 @@ window.addEventListener('DOMContentLoaded', function() {
     // Menu
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu'),
-            closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul > li');
+            menu = document.querySelector('menu');
+
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
         };
-        btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
 
-        menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
+        menu.addEventListener('click', (event) => {
+            const tagName = event.target.tagName;
+            if (tagName === 'A') {
+                handlerMenu();
+            }
+        });
+        btnMenu.addEventListener('click', handlerMenu);
     };
     toggleMenu();
 
@@ -108,7 +111,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
             idAnimation = requestAnimationFrame(drawPopup);
             actionPopup();
-        }
+        };
 
         popupBtns.forEach((item) => {
             item.addEventListener('click', () => {
@@ -149,7 +152,5 @@ window.addEventListener('DOMContentLoaded', function() {
 
         });
     };
-    tabs();
-
-   
+    tabs();  
 });
