@@ -51,20 +51,21 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Menu
     const toggleMenu = () => {
-        const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu');
+        
+        const elementBody = document.querySelector('body');
 
         const handlerMenu = () => {
-            menu.classList.toggle('active-menu');
+            elementBody.querySelector('menu').classList.toggle('active-menu');
         };
 
-        menu.addEventListener('click', (event) => {
-            const tagName = event.target.tagName;
-            if (tagName === 'A') {
+        elementBody.addEventListener('click', (event) => {
+            
+            const target = event.target;
+            if (target.closest('.menu') || target.closest('.active-menu')) {
                 handlerMenu();
             }
+            
         });
-        btnMenu.addEventListener('click', handlerMenu);
     };
     toggleMenu();
 
