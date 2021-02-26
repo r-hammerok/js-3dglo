@@ -154,7 +154,6 @@ window.addEventListener('DOMContentLoaded', function() {
         const dotsWrapper = document.querySelector('.portfolio-dots'),
             countSlides = document.querySelectorAll('.portfolio-item').length;
         
-        dotsWrapper.textContent = '';
         for (let i = 1; i <= countSlides; i++) {
             let newEl = document.createElement('li');
             newEl.classList.add('dot');
