@@ -59,22 +59,30 @@ window.addEventListener('DOMContentLoaded', function() {
         };
 
         elementBody.addEventListener('click', (event) => {
-            
+
             const target = event.target;
-            if (target.closest('.menu') || target.closest('.active-menu')) {
+            if (target.closest('.menu')) {
                 handlerMenu();
+            } else if (elementBody.querySelector('menu').classList.contains('active-menu')) {
+                if (!target.closest('menu') || target.matches('a')) {
+                    handlerMenu();
+                }
             }
-            
         });
     };
     toggleMenu();
 
     //PopUp
     const togglePopup = () => {
-        const popup = document.querySelector('.popup'),
-            popupBtns = document.querySelectorAll('.popup-btn');
+        const popup = document.querySelector('.popup');
         
-        popupBtns.forEach((item) => item.addEventListener('click', () => popup.style.display = 'block'));
+        document.querySelector('#service-block').addEventListener('click', (event) => {
+           const target = event.target;
+           
+           if (target.classList.contains('popup-btn')) {
+               popup.style.display = 'block';
+           }
+        });
 
         popup.addEventListener('click', (event) => {
             let target = event.target;
