@@ -47,7 +47,6 @@ window.addEventListener('DOMContentLoaded', function() {
         idTimer = setInterval(updateClock, 1000);
 
     }
-
     countTimer('01 marth 2021 14:38:30');
 
     // Menu
@@ -118,20 +117,40 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Smooth scrolling
     const smoothScrolling = () => {
-        const menuLinkItems = document.querySelectorAll('menu > ul > li > a, a[href="#service-block"]');
-
-        menuLinkItems.forEach((item) => {
-            item.addEventListener('click', (event) => {
-                event.preventDefault();
-                const blockId = item.getAttribute('href');
-
-                document.querySelector(blockId).scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+        
+        const scrollTo = (blockId = '', behavior = 'smooth', block = 'start') => {
+            document.querySelector(blockId).scrollIntoView({
+                behavior: behavior,
+                block: block
             });
+        };
+
+        document.querySelector('body').addEventListener('click', (event) => {
+            const target = event.target.closest('a');
+            if (target) {
+                const href = target.getAttribute('href');
+                if (href !== '#close' && href.length >= 2 && href[0] === '#') {
+                    event.preventDefault();
+                    scrollTo(href);
+                }
+            }
         });
-    }
+
+
+        // const menuLinkItems = document.querySelectorAll('menu > ul > li > a, a[href="#service-block"]');
+
+        // menuLinkItems.forEach((item) => {
+        //     item.addEventListener('click', (event) => {
+        //         event.preventDefault();
+        //         const blockId = item.getAttribute('href');
+
+        //         document.querySelector(blockId).scrollIntoView({
+        //             behavior: 'smooth',
+        //             block: 'start'
+        //         });
+        //     });
+        // });
+    };
     smoothScrolling();
      
 });
