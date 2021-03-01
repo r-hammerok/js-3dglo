@@ -253,4 +253,68 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     slider();
 
+    // Smooth scrolling
+    const smoothScrolling = () => {
+        
+        const scrollTo = (blockId = '', behavior = 'smooth', block = 'start') => {
+            document.querySelector(blockId).scrollIntoView({
+                behavior: behavior,
+                block: block
+            });
+        };
+
+        document.querySelector('body').addEventListener('click', (event) => {
+            const target = event.target.closest('a');
+            if (target) {
+                const href = target.getAttribute('href');
+                if (href !== '#close' && href.length >= 2 && href[0] === '#') {
+                    event.preventDefault();
+                    scrollTo(href);
+                }
+            }
+        });
+    };
+    smoothScrolling();
+
+    // Change image
+    const changeImage = () => {
+        document.getElementById('command').addEventListener('mouseover', (event) => {
+            const target = event.target;
+            if (target.matches('.command__photo') && target.dataset.img) {
+                target.dataset.imgMain = target.getAttribute('src');
+                target.src = target.dataset.img;
+            }
+        });
+        document.getElementById('command').addEventListener('mouseout', (event) => {
+            const target = event.target;
+            if (target.matches('.command__photo') && target.dataset.imgMain) {
+                target.src = target.dataset.imgMain;
+                target.removeAttribute('data-img-main');
+            }
+        });
+    };
+    changeImage();
+
+    //Calc
+    const calc = () => {
+        document.querySelector('.calc-block').addEventListener('input', (event) => {
+            const target = event.target;
+            if (target.matches('input.calc-item')) {
+                target.value = target.value.replace(/\D/g,'');
+            }   
+        });
+    };
+    calc();
+
+    //Forms fields
+    const fields = () => {
+        document.querySelector('body').addEventListener('input', (event) => {
+            const target = event.target;
+            if (target.matches('input[name="user_name"]') || target.matches('input[name="user_message"]')) {
+                target.value = target.value.replace(/[^а-яё\- ]+/gi, '');
+            }
+        });
+    };
+    fields();
+
 });
