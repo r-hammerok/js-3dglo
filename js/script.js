@@ -278,14 +278,15 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Change image
     const changeImage = () => {
-        document.getElementById('command').addEventListener('mouseover', (event) => {
+        const command = document.getElementById('command');
+        command.addEventListener('mouseover', (event) => {
             const target = event.target;
             if (target.matches('.command__photo') && target.dataset.img) {
                 target.dataset.imgMain = target.getAttribute('src');
                 target.src = target.dataset.img;
             }
         });
-        document.getElementById('command').addEventListener('mouseout', (event) => {
+        command.addEventListener('mouseout', (event) => {
             const target = event.target;
             if (target.matches('.command__photo') && target.dataset.imgMain) {
                 target.src = target.dataset.imgMain;
@@ -295,26 +296,54 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     changeImage();
 
-    //Calc
-    const calc = () => {
-        document.querySelector('.calc-block').addEventListener('input', (event) => {
+    //Validate input
+    const validateInput = () => {
+        const bodyItems = document.querySelector('body');
+        bodyItems.addEventListener('input', (event) => {
             const target = event.target;
+
+            //Calc
             if (target.matches('input.calc-item')) {
                 target.value = target.value.replace(/\D/g,'');
-            }   
-        });
-    };
-    calc();
+            }
 
-    //Forms fields
-    const fields = () => {
-        document.querySelector('body').addEventListener('input', (event) => {
-            const target = event.target;
+            //User name AND User message
             if (target.matches('input[name="user_name"]') || target.matches('input[name="user_message"]')) {
-                target.value = target.value.replace(/[^а-яё\- ]+/gi, '');
+                target.value = target.value.replace(/[^а-яё\-\s]+/gi, '');
+            }
+
+            //User email
+            if (target.matches('input[name="user_email"]')) {
+                target.value = target.value.replace(/[^a-z@\-_\.!~\*']+/gi, '');
+            }
+
+            //User phone
+            if (target.matches('input[name="user_phone"]')) {
+                target.value = target.value.replace(/[^\d()\-]+/gi, '');
+            }
+        });
+
+        bodyItems.addEventListener('focusout', (event) => {
+            const target = event.target;
+
+            const doubleSymbol = (text) => text.replace(/(\-){2,}/gi, '$1').replace(/(\s){2,}/gi, '$1');
+            const trimSymbol = (text) => text.replace(/^[\s\-]*|[\s\-]*$/gi, '');
+
+            //All input
+            if (target.matches('input')) {
+                target.value = doubleSymbol(trimSymbol(target.value));
+            }
+
+            //User name 
+            if (target.matches('input[name="user_name"]')) {
+                const fullName = target.value.split(/[\s]+/);
+                fullName.forEach((item, index) => {
+                    fullName[index] = item[0].toUpperCase() + item.slice(1).toLowerCase();
+                });
+                target.value = fullName.join(' ');
             }
         });
     };
-    fields();
+    validateInput();
 
 });
