@@ -278,19 +278,16 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Change image
     const changeImage = () => {
-        const command = document.getElementById('command');
-        command.addEventListener('mouseover', (event) => {
+        document.getElementById('command').addEventListener('mouseover', (event) => {
             const target = event.target;
             if (target.matches('.command__photo') && target.dataset.img) {
-                target.dataset.imgMain = target.getAttribute('src');
-                target.src = target.dataset.img;
+                [target.src, target.dataset.img] = [target.dataset.img, target.getAttribute('src')];
             }
         });
-        command.addEventListener('mouseout', (event) => {
+        document.getElementById('command').addEventListener('mouseout', (event) => {
             const target = event.target;
-            if (target.matches('.command__photo') && target.dataset.imgMain) {
-                target.src = target.dataset.imgMain;
-                target.removeAttribute('data-img-main');
+            if (target.matches('.command__photo') && target.dataset.img) {
+                [target.dataset.img, target.src] = [target.getAttribute('src'), target.dataset.img];
             }
         });
     };
