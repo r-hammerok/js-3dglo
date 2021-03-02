@@ -346,4 +346,25 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     validateInput();
 
+    //Calculator
+    const calc = () => {
+
+        const calcBlock = document.querySelector('.calc-block'),
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcDay = document.querySelector('.calc-day'),
+            calcCount = document.querySelector('.calc-count'),
+            totalValue = document.getElementById('total');
+        
+        calcBlock.addEventListener('change', (event) => {
+            const target = event.target;
+            if (target.matches('.calc-type') || target.matches('.calc-square') ||
+            target.matches('.calc-day') || target.matches('.calc-count')) {
+                console.log(1);
+            }
+        });
+
+    };
+    calc();
+
 });
