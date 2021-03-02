@@ -381,7 +381,7 @@ window.addEventListener('DOMContentLoaded', function() {
             totalValue.textContent = total;
         };
 
-        calcBlock.addEventListener('change', (event) => {
+        calcBlock.addEventListener('input', (event) => {
             const target = event.target;
             if (target.matches('select') || target.matches('input')) {
                 countSum();
