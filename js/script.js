@@ -336,11 +336,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
             //User name 
             if (target.matches('input[name="user_name"]')) {
-                const fullName = target.value.split(/[\s]+/);
-                fullName.forEach((item, index) => {
-                    fullName[index] = item[0].toUpperCase() + item.slice(1).toLowerCase();
-                });
-                target.value = fullName.join(' ');
+                if (target.value) {
+                    const fullName = target.value.split(/[\s]+/);
+                    fullName.forEach((item, index) => {
+                        fullName[index] = item[0].toUpperCase() + item.slice(1).toLowerCase();
+                    });
+                    target.value = fullName.join(' ');
+                }
             }
         });
     };
