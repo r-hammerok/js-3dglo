@@ -278,14 +278,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Change image
     const changeImage = () => {
-        const command = document.getElementById('command');
-        command.addEventListener('mouseover', (event) => {
+        document.getElementById('command').addEventListener('mouseover', (event) => {
             const target = event.target;
             if (target.matches('.command__photo') && target.dataset.img) {
                 [target.src, target.dataset.img] = [target.dataset.img, target.getAttribute('src')];
             }
         });
-        command.addEventListener('mouseout', (event) => {
+        document.getElementById('command').addEventListener('mouseout', (event) => {
             const target = event.target;
             if (target.matches('.command__photo') && target.dataset.img) {
                 [target.dataset.img, target.src] = [target.getAttribute('src'), target.dataset.img];
@@ -379,7 +378,7 @@ window.addEventListener('DOMContentLoaded', function() {
             totalValue.textContent = total;
         };
 
-        calcBlock.addEventListener('change', (event) => {
+        calcBlock.addEventListener('input', (event) => {
             const target = event.target;
             if (target.matches('select') || target.matches('input')) {
                 countSum();
