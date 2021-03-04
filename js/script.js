@@ -343,7 +343,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         });
     };
-    validateInput();
+    // validateInput();
 
     //Calculator
     const calc = (price = 100) => {

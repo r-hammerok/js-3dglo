@@ -411,6 +411,80 @@
 	</div>
 </div>
 
+<script src="js/validator/validator.js"></script>
+<script>
+	const textPattern = /^[а-яё\s]+$/i;
+	const validForm1 = new Validator({
+		selector: '#form1',
+		pattern: {
+			text: textPattern
+		},
+		method: {
+			'form1-name': [
+				['notEmpty'],
+				['pattern', 'text']
+			],
+			'form1-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form1-email' : [
+				['notEmpty'],
+				['pattern', 'email']
+			]
+		}
+	});
+	const validForm2 = new Validator({
+		selector: '#form2',
+		pattern: {
+			text: textPattern
+		},
+		method: {
+			'form2-name': [
+				['notEmpty'],
+				['pattern', 'text']
+			],
+			'form2-message' : [
+				['notEmpty'],
+				['pattern', 'text']
+			],
+			'form2-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form2-email' : [
+				['notEmpty'],
+				['pattern', 'email']
+			]
+		}
+	});
+	const validForm3 = new Validator({
+		selector: '#form3',
+		pattern: {
+			text: textPattern
+		},
+		method: {
+			'form3-name': [
+				['notEmpty'],
+				['pattern', 'text']
+			],
+			'form3-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form3-email' : [
+				['notEmpty'],
+				['pattern', 'email']
+			]
+		}
+	});
+
+	validForm1.init();
+	validForm2.init();
+	validForm3.init();
+</script>	
+
+
 <script src="js/script.js"></script>
 </body>
 </html>
