@@ -388,7 +388,7 @@ window.addEventListener('DOMContentLoaded', function() {
     };
     calc(100);
 
-    //send ajax form
+    //Send ajax form
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так...',
             loadMessage = 'Загрузка...',
@@ -399,27 +399,27 @@ window.addEventListener('DOMContentLoaded', function() {
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem;';
         
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            form.appendChild(statusMessage);
-
+        const postData = (body, outputData, errorData) => {
             const request = new XMLHttpRequest();
             request.addEventListener('readystatechange', () => {
-                statusMessage.textContent = loadMessage;
-
                 if (request.readyState !== 4) {
                     return;
                 }
-
                 if (request.status === 200) {
-                    statusMessage.textContent = successMessage;
+                    outputData();
                 } else {
-                    statusMessage.textContent = errorMessage;
+                    errorData(request.status);
                 }
             });
-
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(body));
+        };
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
             const formData = new FormData(form);
             let body = {};
             
@@ -427,7 +427,16 @@ window.addEventListener('DOMContentLoaded', function() {
                 body[key] = val;
             });
 
-            request.send(JSON.stringify(body));
+            postData(body,
+                () => {
+                    statusMessage.textContent = successMessage;
+                },
+                (error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                }
+            );
+
         });
 
     };
