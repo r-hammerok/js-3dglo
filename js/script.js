@@ -304,9 +304,14 @@ window.addEventListener('DOMContentLoaded', function() {
                 target.value = target.value.replace(/\D/g,'');
             }
 
-            //User name AND User message
-            if (target.matches('input[name="user_name"]') || target.matches('input[name="user_message"]')) {
-                target.value = target.value.replace(/[^а-яё\-\s]+/gi, '');
+            //User name
+            if (target.matches('input[name="user_name"]')) {
+                target.value = target.value.replace(/[^а-яё\s]+/gi, '');
+            }
+
+            //User message
+            if (target.matches('input[name="user_message"]')) {
+                target.value = target.value.replace(/[^а-яё\d\s\.,\?!;:\-\(\)"]+/gi, '');
             }
 
             //User email
@@ -316,7 +321,18 @@ window.addEventListener('DOMContentLoaded', function() {
 
             //User phone
             if (target.matches('input[name="user_phone"]')) {
-                target.value = target.value.replace(/[^\d()\-]+/gi, '');
+                target.value = target.value.replace(/[^\+\d]/g, '');
+
+                const value = target.value;
+                let pattern = /\d{1,11}/;
+
+                if (value[0] === '+') {
+                    pattern = /\+?\d{0,11}/;
+                }
+                const res = value.match(pattern);
+                if (res) {
+                    target.value = res[0];
+                }
             }
         });
 
@@ -447,30 +463,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             );
         });
-
-        // form.addEventListener('submit', (event) => {
-        //     event.preventDefault();
-        //     form.appendChild(statusMessage);
-        //     statusMessage.textContent = loadMessage;
-        //     const formData = new FormData(form);
-        //     let body = {};
-            
-        //     formData.forEach((val, key) => {
-        //         body[key] = val;
-        //     });
-
-        //     postData(body,
-        //         () => {
-        //             statusMessage.textContent = successMessage;
-        //         },
-        //         (error) => {
-        //             statusMessage.textContent = errorMessage;
-        //             console.error(error);
-        //         }
-        //     );
-
-        // });
-
     };
     sendForm();
 
