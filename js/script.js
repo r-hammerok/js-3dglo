@@ -410,10 +410,33 @@ window.addEventListener('DOMContentLoaded', function() {
             loadMessage = 'Загрузка...',
             successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
         
+        const createLoader = () => {
+            const loader = document.createElement('section');
+            
+            loader.innerHTML = `
+                <div class='sk-fading-circle'>
+                    <div class='sk-circle sk-circle-1'></div>
+                    <div class='sk-circle sk-circle-2'></div>
+                    <div class='sk-circle sk-circle-3'></div>
+                    <div class='sk-circle sk-circle-4'></div>
+                    <div class='sk-circle sk-circle-5'></div>
+                    <div class='sk-circle sk-circle-6'></div>
+                    <div class='sk-circle sk-circle-7'></div>
+                    <div class='sk-circle sk-circle-8'></div>
+                    <div class='sk-circle sk-circle-9'></div>
+                    <div class='sk-circle sk-circle-10'></div>
+                    <div class='sk-circle sk-circle-11'></div>
+                    <div class='sk-circle sk-circle-12'></div>
+                </div>
+            `;
+
+            return loader;
+        };
+        
         const cssType1 = 'font-size: 2rem;',
             cssType2 = 'font-size: 1.5rem; color: white;';
 
-        const statusMessage = document.createElement('div');
+        const statusLoader = createLoader();
         
         const postData = (body, outputData, errorData) => {
             const request = new XMLHttpRequest();
@@ -439,10 +462,9 @@ window.addEventListener('DOMContentLoaded', function() {
             // он всегда будет <form>
             const targetId = event.target.id;
             const form = document.getElementById(targetId);
-            statusMessage.style.cssText = targetId === 'form3' ? cssType2 : cssType1;
+            statusLoader.style.cssText = targetId === 'form3' ? cssType2 : cssType1;
             
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            form.appendChild(statusLoader);
             const formData = new FormData(form);
             let body = {};
             
@@ -452,13 +474,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
             postData(body,
                 () => {
-                    statusMessage.textContent = successMessage;
+                    statusLoader.textContent = successMessage;
                     form.querySelectorAll('input').forEach((item) => {
                         item.value = '';
                     });
                 },
                 (error) => {
-                    statusMessage.textContent = errorMessage;
+                    statusLoader.textContent = errorMessage;
                     console.error(error);
                 }
             );
