@@ -415,21 +415,23 @@ window.addEventListener('DOMContentLoaded', function() {
 
         const statusMessage = document.createElement('div');
         
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
-            });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
+        const postData = (body) => {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+                    if (request.status === 200) {
+                        resolve();
+                    } else {
+                        reject(request.status);
+                    }
+                });
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send(JSON.stringify(body));
+                });
         };
 
         document.body.addEventListener('submit', (event) => {
@@ -450,18 +452,17 @@ window.addEventListener('DOMContentLoaded', function() {
                 body[key] = val;
             });
 
-            postData(body,
-                () => {
-                    statusMessage.textContent = successMessage;
-                    form.querySelectorAll('input').forEach((item) => {
-                        item.value = '';
-                    });
-                },
-                (error) => {
+            postData(body)
+                .then(() => {
+                        statusMessage.textContent = successMessage;
+                        form.querySelectorAll('input').forEach((item) => {
+                            item.value = '';
+                        });
+                    })
+                .catch((error) => {
                     statusMessage.textContent = errorMessage;
                     console.error(error);
-                }
-            );
+                });
         });
     };
     sendForm();
