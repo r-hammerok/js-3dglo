@@ -458,6 +458,9 @@ window.addEventListener('DOMContentLoaded', function() {
                         form.querySelectorAll('input').forEach((item) => {
                             item.value = '';
                         });
+                        setTimeout(() => {
+                            statusMessage.remove();
+                        }, 3000);
                     })
                 .catch((error) => {
                     statusMessage.textContent = errorMessage;
