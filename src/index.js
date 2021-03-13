@@ -13,7 +13,7 @@ import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
 //Timer
-countTimer('11 marth 2021 12:00:00');
+countTimer('13 marth 2021 12:00:00');
 
 // Menu
 toggleMenu();
