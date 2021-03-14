@@ -1,0 +1,9 @@
+form div.error {
+    font-size: 0.6em;
+    text-align: left;
+    -webkit-transform: translateY(-2rem);
+    transform: translateY(-2rem);
+    padding-left: 1em;
+    padding-right: 1rem;
+    color: #f14141;
+}

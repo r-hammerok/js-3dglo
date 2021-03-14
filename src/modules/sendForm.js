@@ -26,6 +26,27 @@ const sendForm = () => {
         // он всегда будет <form>
         const targetId = event.target.id;
         const form = document.getElementById(targetId);
+
+        const errorMessage = document.createElement('div');
+        errorMessage.classList.add('error');
+        const inputs = form.querySelectorAll('input');
+        let isError = false;
+        inputs.forEach((item) => {
+            if (item.name === 'user_name') {
+                if (item.value.trim().length < 2) {
+                    errorMessage.innerText = 'Имя должно содержать минимум ДВА символа!';
+                    item.insertAdjacentElement('afterend', errorMessage);
+                    isError = true;
+                } else {
+                    // item.querySelector()
+                }
+            }
+        });
+
+        if (isError) {
+            return;
+        }
+
         statusMessage.style.cssText = targetId === 'form3' ? cssType2 : cssType1;
         
         form.appendChild(statusMessage);
