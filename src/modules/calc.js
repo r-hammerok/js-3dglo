@@ -25,7 +25,7 @@ const calc = (price = 100) => {
             dayValue = 1.5;
         }
 
-        total = price * typeValue * squareValue * countValue * dayValue;
+        total = Math.round(price * typeValue * squareValue * countValue * dayValue);
 
         totalValue.textContent = total;
     };

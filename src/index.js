@@ -2,7 +2,7 @@
 
 import countTimer from './modules/countTimer';
 import toggleMenu from './modules/toggleMenu';
-import togglePopup from './modules/togglePopup';
+import handlerPopup from './modules/handlerPopup';
 import tabs from './modules/tabs';
 import modifyDot from './modules/modifyDot';
 import slider from './modules/slider';
@@ -19,7 +19,7 @@ countTimer('13 marth 2021 12:00:00');
 toggleMenu();
 
 //PopUp
-togglePopup();
+handlerPopup();
 
 //Tabs
 tabs();
