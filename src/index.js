@@ -13,7 +13,9 @@ import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
 //Timer
-countTimer('13 marth 2021 12:00:00');
+// До окончания акции всегда будет оставаться 3,5 часа
+const endAction = new Date().setMilliseconds(3.5 * 60 * 60 *1000);
+countTimer(endAction);
 
 // Menu
 toggleMenu();

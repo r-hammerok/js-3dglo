@@ -42,13 +42,22 @@ const handlerPopup = () => {
 
     };
 
-    popupClose.addEventListener('click', () => {
+    const closePopup = () => {
         if (window.innerWidth >= 768) {
             animatePopup('close');
         } else {
             popup.removeAttribute('style');
         }
+    };
+
+    popup.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (!target.closest('.popup-content') || target.classList.contains('popup-close')) {
+            closePopup();
+        }
     });
+
     popupBtns.forEach((item) => item.addEventListener('click', () => {
         popup.style.display = 'block';
         if (window.innerWidth >= 768) {

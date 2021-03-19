@@ -16,8 +16,8 @@ const sendForm = () => {
                 }
             }
             if (item.name === 'user_message') {
-                if (item.value.length < 2) {
-                    errors.push('Сообщение должно содержать минимум два символа!');
+                if (item.value.length === 1) {
+                    errors.push('Сообщение может быть пустым или должно содержать минимум два символа!');
                 }
             }
         });
@@ -80,6 +80,13 @@ const sendForm = () => {
                     setTimeout(() => {
                         statusMessage.remove();
                     }, 3000);
+                    if (targetId === 'form3') {
+                        const eventClick = new Event("click");
+                        const popup = document.querySelector('.popup');
+                        setTimeout(() => {
+                            popup.dispatchEvent(eventClick);
+                        }, 1000);
+                    }
                 })
             .catch((error) => {
                 statusMessage.textContent = errorMessage;
