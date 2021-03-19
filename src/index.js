@@ -1,6 +1,13 @@
 'use strict';
 
 import countTimer from './modules/countTimer';
+
+//Timer
+// До окончания акции всегда будет оставаться 3,5 часа
+const endAction = new Date().setMilliseconds(3.5 * 60 * 60 * 1000 + 1);
+countTimer(endAction);
+
+
 import toggleMenu from './modules/toggleMenu';
 import handlerPopup from './modules/handlerPopup';
 import tabs from './modules/tabs';
@@ -11,11 +18,6 @@ import changeImage from './modules/changeImage';
 import validateInput from './modules/validateInput';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
-
-//Timer
-// До окончания акции всегда будет оставаться 3,5 часа
-const endAction = new Date().setMilliseconds(3.5 * 60 * 60 *1000);
-countTimer(endAction);
 
 // Menu
 toggleMenu();

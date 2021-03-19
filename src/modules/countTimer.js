@@ -14,6 +14,9 @@ function countTimer(deadline) {
             dateStop = new Date(deadline).getTime(),
             dateNow = new Date().getTime();
         
+
+        // console.log(dateStop, dateNow);
+
         let timeRemaining = 0, seconds = 0, minutes = 0, hours = 0;
 
         if (dateStop > dateNow) {
@@ -30,7 +33,7 @@ function countTimer(deadline) {
 
     function updateClock() {
         const timer = getTimeRemaining();
-    
+
         timerHours.textContent = strWithFirstZero(timer.hours);
         timerMinutes.textContent = strWithFirstZero(timer.minutes);
         timerSeconds.textContent = strWithFirstZero(timer.seconds);
@@ -39,7 +42,7 @@ function countTimer(deadline) {
             clearInterval(idTimer);
         }
     }
-
+    updateClock();
     idTimer = setInterval(updateClock, 1000);
 }
 
